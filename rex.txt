@@ -24,8 +24,37 @@ git reset —hard HEAD^
 回退到上个版本
 
 
-cat ex.txt
+cat tex.txt
 查看内容
 
 git reflog
 记录每一次命令
+
+git diff HEAD -- tex.txt
+命令可以查看工作区和版本库里面最新版本的区别
+
+git checkout -- readme.txt
+丢弃工作区的修改
+
+git rm
+删除文件
+
+查看分支：git branch
+
+创建分支：git branch <name>
+
+切换分支：git checkout <name>
+
+创建+切换分支：git checkout -b <name>
+
+合并某分支到当前分支：git merge <name>
+
+删除分支：git branch -d <name>
+
+当手头工作没有完成时，先把工作现场
+git stash
+一下，然后去修复bug，修复后，再
+git stash pop
+，回到工作现场。
+
+
