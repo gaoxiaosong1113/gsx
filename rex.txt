@@ -1,2 +1,19 @@
-Git is a distributed version control system.
-Git is free software.
+git init
+初始化一个Git仓库
+
+git status
+查看被修改的文件
+
+git add
+文件添加到仓库
+
+git commit
+提交到版本库
+
+git diff
+查看修改的地方
+
+
+
+git reset —hard HEAD^
+回退到上个版本
