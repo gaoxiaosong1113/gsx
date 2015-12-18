@@ -13,7 +13,19 @@ git commit
 git diff
 查看修改的地方
 
+git log
+命令显示从最近到最远的提交日志
+--pretty=oneline
+
+
 
 
 git reset —hard HEAD^
 回退到上个版本
+
+
+cat ex.txt
+查看内容
+
+git reflog
+记录每一次命令
