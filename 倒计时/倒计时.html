@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css.css" />
+</head>
+<script type="text/javascript">
+    function countdown ()
+    {
+        var end = new Date (2015, 9, 23, 18,59);
+        var now = new Date ();
+        var ges=document.getElementById("ges");
+
+        var m = Math.round (end - now);
+
+        if (m < 0)
+        {
+            ges.style.display="none";
+            return;
+        }
+        setTimeout ('countdown()', 1000);
+    }
+    window.onload = function ()
+    {
+        countdown ();
+    };
+
+
+</script>
+</head>
+<body>
+<p class="" id="ges">hesjandjsnd</p>
+</body>
+
+</html>

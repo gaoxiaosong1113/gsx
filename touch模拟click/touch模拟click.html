@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport"
+          content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,initial-scale=1.0"/>
+    <meta name="format-detection" content="telphone=no, username=no"/>
+
+</head>
+<body>
+<script src="../jquery-1.9.1.js"></script>
+<style type="text/css">
+
+    *{ margin: 0 ; padding: 0;}
+    .model{ min-width:300px; width: 800px; position: fixed; top:-20px; left:50%; margin-left: -400px; border:1px solid #ccc; border-radius: 10px;z-index: 1000; background: #fff; padding: 0 15px; box-sizing: border-box; display: none;opacity: 0;}
+    .model .model-header{ height: 32px; line-height: 32px;}
+    .model .model-content{ padding: 10px 0;}
+    .model .model-footer{ height: 32px; line-height: 32px; text-align: right;}
+    .model-bg{ width: 100%; height: 100%; background: rgba(0,0,0,0.6); position: fixed; top:0; left:0; right:0; bottom:0; z-index: 999; display: none; opacity: 0; }
+
+</style>
+
+<div class="" id="model">
+    <div class="model-header">
+        <h4>标题</h4>
+    </div>
+    <div class="model-content">
+        <p>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
+    </div>
+    <div class="model-footer">
+        <button type="button">取消</button>
+        <button type="button">确定</button>
+    </div>
+</div>
+
+<div class="model-bg" id="model-bg"></div>
+
+<button type="button" id="btn">sss</button>
+
+<script type="text/javascript">
+
+    var body=$("body"),
+        btn=$("#btn"),
+        model=$("#model"),
+        modelBg=$("#model-bg");
+
+    btn.onclick=function(){
+        model.animate();
+        model.style.opacity="1";
+
+    };
+
+    document.body.addEventListener('touchmove', function(event) {
+        event.preventDefault();
+    }, false);
+
+
+
+
+    function nuw(doc, win, undefined) {
+        "use strict";
+        var start = {
+                    x: 0,
+                    y: 0
+                },
+                delta = {
+                    x: 0,
+                    y: 0
+                },
+                startTime = 0,
+                longTime = 200,
+                target,
+                minDelta = 50;
+        function createEvent(type) {
+            var event;
+            try {
+                event = new Event(type);
+            } catch (e) {
+                event = doc.createEvent("Event");
+                event.initEvent(type, true, true);
+            }
+            return event;
+        }
+        function fireEvent(type, target) {
+            var event = createEvent(type);
+            target.dispatchEvent(event);
+        }
+        function onTouchStart(event) {
+            var touch = event.touches[0];
+            event.preventDefault();
+            target = event.target;
+            start.x = touch.pageX;
+            start.y = touch.pageY;
+            delta.x = 0;
+            delta.y = 0;
+            startTime = +new Date();
+        }
+        function onTouchMove(event) {
+            var touch = event.touches[0];
+            delta.x = touch.pageX - start.x;
+            delta.y = touch.pageY - start.y;
+        }
+        function onTouchEnd(event) {
+            var touch = event.changedTouches[0],
+                    deltaTime = +new Date() - startTime,
+                    deltaX = Math.abs(delta.x),
+                    deltaY = Math.abs(delta.y);
+            if (touch.pageX === start.x && touch.pageY === start.y) {
+                if (deltaTime < longTime) {
+                    fireEvent("tap", target);
+                } else {
+                    fireEvent("longTap", target);
+                }
+            }
+
+            if (deltaX > minDelta || deltaY > minDelta) {
+                if (deltaX > deltaY) {
+                    if (delta.x > 0) {
+                        fireEvent("swipeRight", target);
+                    } else {
+                        fireEvent("swipeLeft", target);
+                    }
+                } else {
+                    if (delta.y > 0) {
+                        fireEvent("swipeDown", target);
+                    } else {
+                        fireEvent("swipeUp", target);
+                    }
+                }
+            }
+        }
+        doc.addEventListener("touchstart", onTouchStart);
+        doc.addEventListener("touchmove", onTouchMove);
+        doc.addEventListener("touchend", onTouchEnd);
+
+    };
+
+
+//    touchstart：手指放在一个DOM元素上。
+//    touchmove：手指拖曳一个DOM元素。
+//    touchend：手指从一个DOM元素上移开。
+</script>
+</body>
+</html>
