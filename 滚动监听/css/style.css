@@ -1,0 +1,10 @@
+@charset "utf-8";
+
+*{ margin: 0; padding:0;}
+
+.box{width: 300px; height: 500px; overflow: auto; border: 1px solid #ccc;}
+.box-nav{width: 100px; height: 500px; overflow: auto; float: left;background: #ccc;}
+.box-nav div{width: 100px; height: 30px;}
+.box-nav div.hover{ background: #fff;}
+.box-center{width: 200px; height: 500px; overflow: auto; float: left;}
+.box-center div{border-bottom: 1px solid #ccc; height: 600px;}

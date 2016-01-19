@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="css/style.css"/>
+    <meta name="viewport"
+          content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,initial-scale=1.0">
+</head>
+<body>
+
+<div class="box">
+    <div class="box-nav">
+        <div class="hover">0</div>
+        <div class=""><a href="#4">1</a></div>
+        <div class="">2</div>
+        <div class="">3</div>
+        <div class="">4</div>
+        <div class="">5</div>
+        <div class="">6</div>
+        <div class="">7</div>
+        <div class="">1</div>
+        <div class="">1</div>
+    </div>
+    <div class="box-center">
+        <div>0</div>
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+        <div>7</div>
+        <div>8</div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    /**
+     * Created by anhaogxs on 15/12/30.
+     */
+    var scroll = {
+        newClass: function (obj) {
+            obj = obj || {};
+            this.init.prototype = scroll;
+            return new this.init(obj);
+        },
+
+        init: function (obj) {
+            this.box = obj.box;
+            this.boxNav = obj.boxNav;
+            this.boxNavDiv = obj.boxNavDiv;
+            this.boxCenter = obj.boxCenter;
+            this.boxCenterDiv = obj.boxCenterDiv;
+            this.item = obj.item;
+            this.bindTouch();
+        },
+        bindTouch: function () {
+            var _this = this;
+            var elesBoxScroll = 0;
+            var elesBoxScrolls = 0;
+            this.box.addEventListener('touchstart', function (e) {
+                elesBoxScroll = _this.boxCenter.scrollTop;
+
+            }, false);
+
+            this.box.addEventListener('touchmove', function (e) {
+
+            }, false);
+
+            this.box.addEventListener('touchend', function (e) {
+                var topValue = 0;
+                var num = 0;
+                var time = window.setInterval(documentScroll, 50);
+
+                function documentScroll() {
+                    topValue = _this.boxCenter.scrollTop;
+                    if (num == topValue) {
+                        clearInterval(time);
+                        for (var i = 0; i < _this.boxCenterDiv.length; i++) {
+                            var aryC = (_this.boxCenterDiv[i].clientHeight/3+_this.boxCenterDiv[i].offsetTop);
+                            if (aryC > topValue) {
+                                _this.item = i;
+                                elesBoxScrolls = _this.boxCenter.scrollTop;
+                                if (elesBoxScroll < elesBoxScrolls) {
+                                    _this.next();
+                                    return;
+                                }
+                                if (elesBoxScroll > elesBoxScrolls) {
+                                    _this.prev();
+                                    return;
+                                }
+                            }
+                        }
+
+                    }
+                    num = topValue;
+                }
+
+            }, false);
+
+            for (var i = 0; i < this.boxNavDiv.length; i++) {
+                this.boxNavDiv[i].zs = i;
+                this.boxNavDiv[i].onclick = function () {
+                    _this.boxNavDivs(this.zs);
+
+                }
+            }
+
+        },
+        boxNavDivs: function (index) {
+            for (var i = 0; i < this.boxNavDiv.length; i++) {
+                this.removeClass(this.boxNavDiv[i], 'hover')
+            }
+            this.addClass(this.boxNavDiv[index], 'hover');
+            this.boxCenter.scrollTop = this.boxCenterDiv[index].offsetTop;
+        },
+        prev: function () {
+            this.hover();
+            if(this.boxNavDiv[this.item].offsetTop<this.boxNav.scrollTop){
+                this.boxNav.scrollTop=0;
+            }
+
+        },
+        next: function () {
+            this.hover();
+            if(this.boxNavDiv[this.item].offsetTop>this.box.clientHeight){
+                this.boxNav.scrollTop=this.boxNavDiv[this.item].offsetTop-60;
+            }
+
+        },
+        hover: function () {
+            for (var i = 0; i < this.boxNavDiv.length; i++) {
+                this.removeClass(this.boxNavDiv[i], 'hover')
+            }
+            this.addClass(this.boxNavDiv[this.item], 'hover');
+
+        },
+        addClass: function (ele, strClass) {
+            var reg = new RegExp("(?:^| )" + strClass + "(?: |$)");
+            if (!reg.test(ele.className))ele.className += " " + strClass;
+        },
+
+        removeClass: function (ele, strClass) {
+            var reg = new RegExp("(?:^| )" + strClass + "(?: |$)", "g");
+            ele.className = ele.className.replace(reg, "");
+        }
+
+
+    };
+
+
+    scroll.newClass({
+        box: document.querySelector('.box'),
+        boxNav: document.querySelector('.box-nav'),
+        boxNavDiv: document.querySelector('.box-nav').getElementsByTagName('div'),
+        boxCenter: document.querySelector('.box-center'),
+        boxCenterDiv: document.querySelector('.box-center').getElementsByTagName('div'),
+        item: 0
+    })
+
+</script>
+
+</body>
+</html>
