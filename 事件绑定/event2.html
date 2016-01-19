@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <style type="text/css">
+        #div1 {
+            width: 100px;
+            height: 100px;
+            background: #ff5a00;
+        }
+    </style>
+
+</head>
+<body>
+<div id="div1">
+    <a href="http://www.baidu.com" id="a1">百度</a>
+</div>
+
+
+<script type="text/javascript">
+
+    function fn1() {
+        alert(1)
+    }
+    function fn2() {
+        alert(2)
+    }
+    function fn3() {
+        alert(3)
+    }
+    function fn4(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        alert(4);
+    }
+    on(div1, "click", fn1);
+    on(div1, "click", fn2);
+    on(div1, "click", fn3);
+
+    on(a1, "click", fn1);
+    on(a1, "click", fn2);
+    on(a1, "click", fn3);
+    on(a1, "click", fn4);
+
+    function on(ele, type, fn) {//只管登记
+        if (ele.addEventListener) {
+            ele.addEventListener(type, fn, false);
+            return;
+        }
+        //以下是ie6，7，8的方案
+        if (!ele["aEvent" + type]) {//只有一次执行的机会
+            ele["aEvent" + type] = [];//创建一个程序池   "aEvent"加区分符，这是一个自定义属性的数组
+            ele.attachEvent("on" + type, function () {
+                run.call(ele)
+            });//也只会执行一次
+        } else {
+            var a = ele["aEvent" + type];
+            for (var i = 0; a < i.length; i++) {
+                if (a[i] == fn)return;
+            }
+            a.push(fn);
+        }
+    }
+
+    function run(e) {//负责取出数组里面存的，并且执行
+        e = e || event;
+        var a = this["aEvent" + e.type];
+        if (!e.target) {
+            e.preventDefault = function () {
+                e.returnValue = false;
+            };//阻止事件传播
+            e.stopPropagation = function () {
+                e.cancelBubble = true
+            };//阻止事件默认行为
+            e.target = e.srcElement;//事件源
+            e.pageX = (document.documentElement.scrollLeft || docuement.body.scrollLeft) + e.clientX;
+            e.pageY = (document.documentElement.scrollTop || docuement.body.scrollTop) + e.clientY;
+        }
+        if (a) {
+            for (var i = 0; i < a.length; i++) {
+                if (a[i] == "function") {
+                    a[i].call(this.e);
+                } else {
+                    a.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+    }
+
+
+    function off(ele, type, fn) {//解除事件绑定;
+        var a = ele["aEvent" + type];
+        if (a) {
+            for (var i = 0; i < a.length; i++) {
+                if (a[i] == fn) {
+                    a[i] = null;
+                    break;
+                }
+            }
+        }
+    }
+
+
+</script>
+
+</body>
+</html>

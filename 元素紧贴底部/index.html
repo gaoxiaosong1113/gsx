@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,initial-scale=1.0">
+    <title></title>
+    <style type="text/css">
+        *{ margin: 0;padding: 0;}
+        #sdiv{ width: 100%; height: 50px; position: absolute; bottom:0;left:0; right:0;background: #ccc;}
+    </style>
+</head>
+<body>
+dis
+<br/>dis1
+<br/>dis2
+<br/>dis3
+<br/>dis4
+<br/>dis5
+<br/>dis6
+<br/>dis7
+<br/>dis8
+<br/>dis9
+<br/>dis0
+<br/>dis1
+<br/>dis2
+<br/>dis1
+<br/>dis1
+<br/>dis1
+<br/>dis1
+<br/>dis1
+<br/>dis1
+<br/>dis1
+<br/>dis1
+<br/>dis1
+<br/>dis1
+<br/>dis1
+<br/>dis1
+<br/>dis1
+<br/>dis1
+<br/>dis2
+
+<div id="sdiv"></div>
+
+<script type="text/javascript">
+    var sdiv=document.getElementById("sdiv");
+    console.log("div height "+sdiv.scrollHeight);
+    console.log("body height "+document.body.offsetHeight);
+    console.log("widow height "+window.screen.height);
+    function footer(ele){
+        var eleHeight=ele.scrollHeight;
+        var bodyHeight=document.body.offsetHeight;
+        var windowHeight=window.screen.height;
+        if(bodyHeight<windowHeight){
+            ele.style.top="";
+        }else if(windowHeight<bodyHeight+eleHeight){
+            ele.style.top=bodyHeight+"px";
+        }
+    }
+    footer(sdiv)
+
+</script>
+</body>
+</html>
